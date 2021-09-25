@@ -1,5 +1,5 @@
 const express = require("express");
-const BookData = require ('./src/model/Bookdata');
+const CarData = require ('./src/model/Cardata');
 const AuthorData = require('./src/model/Authordata');
 const UserData = require('./src/model/Userdata');
 const bcrypt = require('bcryptjs');
@@ -89,13 +89,13 @@ app.post('/adduser' , function (req,res){
 });
 
 
-app.get('/books' , function (req,res){
+app.get('/cars' , function (req,res){
     res.header("Access-control-Allow-Origin" , "*");
     res.header("Access-control-Allow-Methods : GET,POST,PATCH,PUT,DELETE,OPTIONS");
 
-    BookData.find()
-    .then(function(books){ 
-        res.send(books);
+    CarData.find()
+    .then(function(cars){ 
+        res.send(cars);
     });
 });
 
@@ -109,14 +109,14 @@ app.get('/authors' , function (req,res){
     });
 });
 
-app.get('/book/:id' , (req,res)=>{
-    console.log("bookItem");
+app.get('/car/:id' , (req,res)=>{
+    console.log("carItem");
 
     const id = req.params.id; 
     
-    BookData.findOne({"_id":id})
-    .then((book)=>{
-        res.send(book);
+    CarData.findOne({"_id":id})
+    .then((car)=>{
+        res.send(car);
     })
 })
 
@@ -131,25 +131,25 @@ app.get('/author/:id' , (req,res)=>{
     })
 })
 
-app.post('/insertbook' ,verifyToken, function (req,res){
+app.post('/insertcar' ,verifyToken, function (req,res){
     res.header("Access-control-Allow-Origin" , "*");
     res.header("Access-control-Allow-Methods : GET,POST,PATCH,PUT,DELETE,OPTIONS");
     console.log("insert");
     console.log(req.body);
 
-    var book = {
-        title : req.body.book.title,
-        author : req.body.book.author,
-        genre : req.body.book.genre,
-        summary : req.body.book.summary,
-        image : req.body.book.image
+    var car = {
+        title : req.body.car.title,
+        author : req.body.car.author,
+        genre : req.body.car.genre,
+        summary : req.body.car.summary,
+        image : req.body.car.image
     }
 
-    var book = new BookData(book);
-    book.save();
+    var car = new CarData(car);
+    car.save();
 });
 
-app.put('/updatebook' ,verifyToken, function(req,res){
+app.put('/updatecar' ,verifyToken, function(req,res){
     console.log(req.body);
     id = req.body._id,
 
@@ -159,7 +159,7 @@ app.put('/updatebook' ,verifyToken, function(req,res){
     summary = req.body.summary,
     image = req.body.image
 
-    BookData.findByIdAndUpdate({"_id" : id },
+    CarData.findByIdAndUpdate({"_id" : id },
                                   {$set : {
                                       "title" : title,
                                       "author" : author,
@@ -172,9 +172,9 @@ app.put('/updatebook' ,verifyToken, function(req,res){
     })                                  
 })
 
-app.delete('/removebook/:id' ,verifyToken, function(req,res){
+app.delete('/removecar/:id' ,verifyToken, function(req,res){
     id = req.params.id;
-    BookData.findByIdAndDelete({ "_id" : id })
+    CarData.findByIdAndDelete({ "_id" : id })
     .then(()=>{
         console.log('success');
         res.send();

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://userone:userone@ictakfiles.zmywv.mongodb.net/LIBRARYAPP?retryWrites=true&w=majority');
 
 const Schema = mongoose.Schema;
-const BookSchema = new Schema({
+const CarSchema = new Schema({
     title : String,
     author : String,
     genre : Array,
@@ -11,6 +11,6 @@ const BookSchema = new Schema({
     image : String
 });
 
-var BookData = mongoose.model('bookdata' , BookSchema);
+var CarData = mongoose.model('cardata' , CarSchema);
 
-module.exports = BookData;
+module.exports = CarData;
